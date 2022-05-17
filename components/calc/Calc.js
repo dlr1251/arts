@@ -8,8 +8,7 @@ const Calc = () => {
     const [fechaVencimiento, setFechaVencimiento] = useState('');
     const [fechaLiquidacion, setFechaLiquidacion] = useState('');
     const [intereses, setIntereses] = useState(0);
-    const [monthsArray, setMonthsArray] = useState([]);
-    const [months, setMonths] = useState(0);
+    const [monthsArray, setMonthsArray] = useState([]);    
     const [monthRow, setMonthRow] = useState([]);
 
     return (
@@ -22,17 +21,17 @@ const Calc = () => {
                 fechaLiquidacion={fechaLiquidacion}
                 setFechaLiquidacion={setFechaLiquidacion}
                 monthsArray={monthsArray}
-                setMonthsArray={setMonthsArray}
-                months={months}
-                setMonths={setMonths}
+                setMonthsArray={setMonthsArray}                                
                 monthRow={monthRow}
                 setMonthRow={setMonthRow}
             />
             <h3>Capital Credito: {capitalCredito}</h3>
             <TableOutput
                 capitalCredito={capitalCredito}
+                mothsArray={monthsArray}
                 fechaVencimiento={fechaVencimiento}
                 fechaLiquidacion={fechaLiquidacion}
+
             />
         </>
     )

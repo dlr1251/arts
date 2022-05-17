@@ -13,6 +13,7 @@ import React from 'react';
 
 const TableOutput = (props) => {
 
+    console.log(props.monthsArray)
     return (
         <div>
             <table className="hover:table-fixed">
@@ -29,15 +30,15 @@ const TableOutput = (props) => {
                 <tbody>
                     {
                         
-                        [1,2,3,4,5].map( (x, i) => {
+                        [1,2,3,4].map( (month, i) => {
                             return (
                                     <tr key={i}>
-                                        <td>{`today`} </td>
-                                        <td>{props.capitalCredito} </td>
-                                        <td>{props.fechaVencimiento}</td>
-                                        <td>{props.fechaLiquidacion}</td>
-                                        <td>1961</td>
-                                        <td>1961</td>
+                                        <td>{month.inicioMes} </td>
+                                        <td>{month.finMes} </td>
+                                        <td>{month.porcionMes}</td>
+                                        <td>{month.tasaAnual}</td>
+                                        <td>{`e`}</td>
+                                        <td>{month.porcionMes * month.tasaAnual * props.capitalCredito}</td>
                                     </tr>
                                 )
                             })
