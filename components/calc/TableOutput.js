@@ -29,7 +29,7 @@ const TableOutput = (props) => {
                 <tbody>
                     {
                         
-                        [1,2].map( (x, i) => {
+                        [1,2,3,4,5].map( (x, i) => {
                             return (
                                     <tr key={i}>
                                         <td>{`today`} </td>

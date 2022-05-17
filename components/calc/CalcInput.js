@@ -1,35 +1,44 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { DateTime, Interval } from "luxon";
-
 const CalcInput = (props) => {
 
+    useEffect(() => {  
+        console.log('effected');
+        // props.setCapitalCredito(e.target.value)
+        // props.setFechaVencimiento(e.target.value)
+        // props.setFechaLiquidacion(e.target.value)
+        getMonths();
+       })
     
+
     const getMonths = () => {
                 
         let ini = new Date(props.fechaVencimiento);
         let fin = new Date(props.fechaLiquidacion);
         let inter = Interval.fromDateTimes(ini, fin);        
         props.setMonths(Math.ceil(inter.length('months')))
-        
-        let copyOfMonthRow = props.monthRow;        
+                
         let mesVigente;
+        let tableRow = [];
+
         for (let i = 0; i < props.months; i++) {
-            
             if (i === 0) {
                 let inicioMes = DateTime.fromISO(props.fechaVencimiento).toLocaleString();
                 let finMes = DateTime.fromISO(props.fechaVencimiento).endOf('month').toLocaleString()
-                mesVigente = new Date(finMes);
-                props.setMonthRow({inicioMes, finMes, mesVigente})
-                // console.log(props.monthRow);
-                                                
+                mesVigente = new Date(finMes).getMonth();
+                tableRow.push({inicioMes, finMes, mesVigente})                                                                
             } else if (i < props.months-1) {
-                mesVigente = DateTime.local(props.monthRow.mesVigente);
-                mesVigente = mesVigente.plus({ months: 1 }).toISODate();
-                console.log(mesVigente);
-                props.setMonthRow({mesVigente})                
-                // console.log(props.monthRow);
-                                                
-                
+                tableRow.map( (tr, j) => {
+
+                    // let inicioMes = tr.inicioMes.toISO()
+                    // inicioMes = DateTime.fromISO(inicioMes);
+                    // inicioMes = inicioMes.plus({months: 1}).toISODate()
+                    console.log(tr.inicioMes)
+                })
+                // mesVigente = DateTime.local(tableRow[i-1].mesVigente);
+                // mesVigente = mesVigente.plus({ months: 1 }).toISODate();
+                // tableRow.push({mesVigente})                
             } else {
                 
                 // console.log(monthRow)  
@@ -62,11 +71,11 @@ const CalcInput = (props) => {
     }
     const handleChangeFV = (e) => {
         props.setFechaVencimiento(e.target.value)      
-        getMonths();
+        // getMonths();
     }
     const handleChangeFL = (e) => {
         props.setFechaLiquidacion(e.target.value)      
-        getMonths();
+        // getMonths();
     }
     // getMonths();
         
