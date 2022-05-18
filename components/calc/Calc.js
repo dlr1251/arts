@@ -4,9 +4,12 @@ import CalcInput from './CalcInput'
 import TableOutput from './TableOutput'
 
 const Calc = () => {
+    let d = new Date();
+    let iDate = d.toString();
+
     const [capitalCredito, setCapitalCredito] = useState(0);
-    const [fechaVencimiento, setFechaVencimiento] = useState('');
-    const [fechaLiquidacion, setFechaLiquidacion] = useState('');
+    const [fechaVencimiento, setFechaVencimiento] = useState(iDate);
+    const [fechaLiquidacion, setFechaLiquidacion] = useState(iDate);
     const [intereses, setIntereses] = useState(0);
     const [monthsArray, setMonthsArray] = useState([]);    
     const [monthRow, setMonthRow] = useState([]);
@@ -26,11 +29,10 @@ const Calc = () => {
                 setMonthRow={setMonthRow}
             />
             <h3>Capital Credito: {capitalCredito}</h3>
+            {console.log(monthsArray)}
             <TableOutput
                 capitalCredito={capitalCredito}
-                mothsArray={monthsArray}
-                fechaVencimiento={fechaVencimiento}
-                fechaLiquidacion={fechaLiquidacion}
+                monthsArray={monthsArray}                                
 
             />
         </>

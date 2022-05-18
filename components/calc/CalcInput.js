@@ -13,10 +13,11 @@ import {
     }  from 'date-fns';
 
 const CalcInput = (props) => {
+    let inicioMes;
+    let finMes;
 
     useEffect(() => {  
-        console.log('effected');
-        getMonths();
+        getMonths();        
        }, [props.fechaVencimiento, props.fechaLiquidacion, props.capitalCredito] )
     
 
@@ -24,47 +25,65 @@ const CalcInput = (props) => {
         let start;
         let end;        
         let tableRow = [];
+        let initDate = new Date()
 
-        props.fechaVencimiento === '' ?  start = new Date() :  start = new Date(props.fechaVencimiento);
-        props.fechaLiquidacion === '' ?  end = new Date() :  end = new Date(props.fechaLiquidacion);        
+        if (props.fechaVencimiento === '') {
+            start = initDate
+            inicioMes = initDate
+            props.setFechaVencimiento(start.toString());
+        }  else {
+            start = new Date(props.fechaVencimiento);
+            inicioMes = new Date(props.fechaVencimiento);
+        }  
+
+        if (props.fechaLiquidacion === '') {
+            end = initDate;
+            finMes = initDate;
+            props.setFechaVencimiento(end.toString());
+        }  else {
+            end = new Date(props.fechaLiquidacion);
+        }          
         
+
         let inter = eachMonthOfInterval({start, end});                                        
 
         inter.map((month, i) => {
             if (i === 0) {
-                let inicioMes = new Date(props.fechaVencimiento)
-                let finMes = endOfMonth(inicioMes);
+                // inicioMes = new Date(props.fechaVencimiento)
+                inicioMes = start;
+                finMes = endOfMonth(inicioMes);
                 let mesVigente = getMonth(finMes);
                 let porcionMes = differenceInDays(finMes, inicioMes )/getDaysInMonth(mesVigente);
-                let formated = `${((mesVigente + 1) < 10 ? '0' : '')  (mesVigente + 1) }-${inicioMes.getFullYear()}`;
+                let formated = format(inicioMes, "MM-yyyy")                
                 let tasaAnual = intereses[formated].usura
-
+                
                 tableRow.push({inicioMes, finMes, mesVigente, porcionMes, tasaAnual});
                 
             } else if (i < inter.length-1) {                
-                let inicioMes = startOfMonth(addMonths(start, i));
-                let finMes = endOfMonth(inicioMes);
-                let mesVigente = getMonth(finMes);                
-                let porcionMes = differenceInDays(finMes, inicioMes )/getDaysInMonth(finMes)
-                let formated = `${((mesVigente + 1) < 10 ? '0' : '') + (mesVigente + 1)}-${inicioMes.getFullYear()}`;                
+                inicioMes = startOfMonth(addMonths(start, i));
+                finMes = endOfMonth(inicioMes);
+                let mesVigente = getMonth(finMes);                          
+                let porcionMes = Math.ceil(differenceInDays(finMes, inicioMes )/getDaysInMonth(finMes))
+                let formated = format(inicioMes, "MM-yyyy");                 
                 let tasaAnual = intereses[formated].usura
+                
                 tableRow.push({inicioMes, finMes, mesVigente, porcionMes, tasaAnual});
 
             } else {
-                let finMes = new Date(props.fechaLiquidacion)
-                let inicioMes = startOfMonth(finMes);
+                finMes = new Date(props.fechaLiquidacion)
+                inicioMes = startOfMonth(finMes);
                 let mesVigente = getMonth(finMes);                
                 let porcionMes = differenceInDays(finMes, inicioMes )/getDaysInMonth(finMes);
-                let formated = `${((mesVigente + 1) < 10 ? '0' : '') + (mesVigente + 1) }-${inicioMes.getFullYear()}`;
-                let tasaAnual = intereses[formated].usura
+                let formated = format(finMes, "MM-yyyy")
+                let tasaAnual = intereses[formated].usura    
                 
                 tableRow.push({inicioMes, finMes, mesVigente, porcionMes, tasaAnual});
 
             }
 
         })
-
         props.setMonthsArray(tableRow);
+        
 
     }
 
@@ -82,35 +101,41 @@ const CalcInput = (props) => {
 
     return (
         <div>
-            <div className="p-4">
-                Valor
-                <input 
-                    className="border-solid border-2 border-sky-500" 
-                    value={props.capitalCredito}
-                    onChange={handleChange}
-                    type="number" />
+            <div class="block p-6 rounded-lg shadow-lg bg-white max-w-md">
+                <div class="form-group mb-6">
+                    <input 
+                        type="number" 
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+                        id="exampleInput7"
+                        value={props.capitalCredito}
+                        onChange={handleChange}
+                        placeholder="Capital"/>
+                </div>
+                <div class="form-group mb-6">
+                    <input 
+                        type="date" 
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+                        id="exampleInput8"
+                        value={props.fechaVencimiento}
+                        onChange={handleChangeFV}
+                        placeholder="Fecha Vencimiento"/>
+                </div>
+                <div class="form-group mb-6">
+                    <input 
+                        type="date" 
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+                        id="exampleInput8"
+                        value={props.fechaLiquidacion}
+                        onChange={handleChangeFL}
+                        placeholder="Fecha Liquidacion"/>
+                </div>           
                 
-            </div>
-            <div className="p-4">
-                Fecha Vencimiento
-                <input 
-                    className="border-solid border-2 border-sky-500" 
-                    value={props.fechaVencimiento}
-                    onChange={handleChangeFV}
-                    type="date" />
-            </div>
-            <div className="p-4">
-                Fecha Liquidación
-                 <input 
-                    className="border-solid border-2 border-sky-500" 
-                    value={props.fechaLiquidacion}
-                    onChange={handleChangeFL}
-                    type="date" />
             </div>
         </div>
     )
 }
 
+// Falta actualizar abril y mayo
 const intereses = 
 {
     '10-2017': { interes: 21.15, usura: 31.73 },
@@ -167,6 +192,8 @@ const intereses =
     '01-2022': { interes: 17.66, usura: 26.49 },
     '02-2022': { interes: 18.30, usura: 26.49 },
     '03-2022': { interes: 18.47, usura: 27.71 },
+    '04-2022': { interes: 18.47, usura: 27.71 },
+    '05-2022': { interes: 18.47, usura: 27.71 },
 }
 
 export default CalcInput;

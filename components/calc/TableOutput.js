@@ -1,44 +1,34 @@
 import React from 'react';
-
-/**
- *  
- *  Periodo (inicio-fin)
- *  Porcion mes
- *  Tasa anual
- *  Tasa mensual
- *  Capital
- *  Intereses.
- * 
- */
+import { format } from 'date-fns';
 
 const TableOutput = (props) => {
 
-    console.log(props.monthsArray)
+    const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sept", "Oct", "Nov", "Dic"];
     return (
         <div>
-            <table className="hover:table-fixed">
+            <table className="min-w-full border text-center">
                 <thead>
                     <tr>
-                    <th>Inicio Mes</th>
-                    <th>Fin de mes</th>
-                    <th>Porcion mes</th>
-                    <th>Tasa anual</th>
-                    <th>Tasa mensual</th>
-                    <th>Intereses</th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 border-r">Inicio Mes</th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 border-r">Fin de mes</th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 border-r">Porcion mes</th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 border-r">Tasa anual</th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 border-r">Tasa mensual</th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 border-r">Intereses</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        
-                        [1,2,3,4].map( (month, i) => {
+                    {                        
+                        props.monthsArray.map( (month, i) => {
+                            
                             return (
-                                    <tr key={i}>
-                                        <td>{month.inicioMes} </td>
-                                        <td>{month.finMes} </td>
-                                        <td>{month.porcionMes}</td>
-                                        <td>{month.tasaAnual}</td>
-                                        <td>{`e`}</td>
-                                        <td>{month.porcionMes * month.tasaAnual * props.capitalCredito}</td>
+                                    <tr className="border-b" key={i}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{`${month.inicioMes.getDate()}-${meses[month.inicioMes.getMonth()]}-${month.inicioMes.getFullYear()}`} </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{`${month.finMes.getDate()}-${meses[month.finMes.getMonth()]}-${month.finMes.getFullYear()}`} </td>                                        
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{month.porcionMes.toFixed(2)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{`${month.tasaAnual}%`}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">Tasa mensual</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{`$${(month.porcionMes * month.tasaAnual * props.capitalCredito).toFixed(2)}`}</td>
                                     </tr>
                                 )
                             })
