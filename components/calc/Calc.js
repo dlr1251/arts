@@ -27,9 +27,7 @@ const Calc = () => {
                 setMonthsArray={setMonthsArray}                                
                 monthRow={monthRow}
                 setMonthRow={setMonthRow}
-            />
-            <h3>Capital Credito: {capitalCredito}</h3>
-            {console.log(monthsArray)}
+            />                        
             <TableOutput
                 capitalCredito={capitalCredito}
                 monthsArray={monthsArray}                                

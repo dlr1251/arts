@@ -101,8 +101,8 @@ const CalcInput = (props) => {
 
     return (
         <div>
-            <div class="block p-6 rounded-lg shadow-lg bg-white max-w-md">
-                <div class="form-group mb-6">
+            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
+                <div className="form-group mb-6">
                     <input 
                         type="number" 
                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
@@ -111,7 +111,7 @@ const CalcInput = (props) => {
                         onChange={handleChange}
                         placeholder="Capital"/>
                 </div>
-                <div class="form-group mb-6">
+                <div className="form-group mb-6">
                     <input 
                         type="date" 
                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
@@ -120,7 +120,7 @@ const CalcInput = (props) => {
                         onChange={handleChangeFV}
                         placeholder="Fecha Vencimiento"/>
                 </div>
-                <div class="form-group mb-6">
+                <div className="form-group mb-6">
                     <input 
                         type="date" 
                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
