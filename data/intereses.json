@@ -1,4 +1,4 @@
-export default 
+const intereses = 
 {
     '10-2017': { interes: 21.15, usura: 31.73 },
     '11-2017': { interes: 20.96, usura: 31.44 },

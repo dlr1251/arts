@@ -54,7 +54,8 @@ const CalcInput = (props) => {
                 finMes = endOfMonth(inicioMes);
                 let mesVigente = getMonth(finMes);
                 let porcionMes = differenceInDays(finMes, inicioMes )/getDaysInMonth(mesVigente);
-                let formated = format(inicioMes, "MM-yyyy")                
+                let formated = format(inicioMes, "MM-yyyy");
+                console.log(formated)                
                 let tasaAnual = intereses[formated].usura
                 
                 tableRow.push({inicioMes, finMes, mesVigente, porcionMes, tasaAnual});
